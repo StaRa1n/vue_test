@@ -1,6 +1,4 @@
-# vue_test
-
-##|-- undefined
+|-- undefined
     |-- .gitignore
     |-- babel.config.js
     |-- jsconfig.json
