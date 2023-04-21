@@ -3,6 +3,27 @@
 
 // mddir生成树形目录
 
+## 文件结构
+    |-- VUE_TEST
+        |-- .gitignore
+        |-- babel.config.js
+        |-- jsconfig.json
+        |-- package-lock.json
+        |-- package.json
+        |-- README.md
+        |-- vue.config.js
+        |-- public
+        |   |-- favicon.ico
+        |   |-- index.html
+        |-- src
+            |-- App.vue
+            |-- main.js
+            |-- assets
+            |   |-- logo.png
+            |-- components
+                |-- SchoolName.vue
+                |-- StudentName.vue
+
 
 ## ref属性
     1.用来给元素或子组件注册引用信息(id的代替者)
