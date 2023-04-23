@@ -1,11 +1,12 @@
 <template>
-  <div class="test">
-    <h2>学生姓名:{{ name }}</h2>
+  <div class="demo">
+    <h2 @click="showName">学生姓名:{{ name }}</h2>
     <h2>性别:{{ sex }}</h2>
   </div>
 </template>
 
 <script>
+import { mixin } from '../mixin.js';
 
 export default {
   name: 'VueTestSchool',
@@ -15,11 +16,7 @@ export default {
       sex: '男'
     };
   },
+  mixins: [mixin]
 };
 </script>
-
-<style>
-.test {
-  background-color: #e66868;
-}
-</style>
+  

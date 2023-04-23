@@ -1,11 +1,12 @@
 <template>
   <div class="demo">
-    <h2>学校名称:{{ name }}</h2>
+    <h2 @click="showName">学校名称:{{ name }}</h2>
     <h2>学校地址:{{ address }}</h2>
   </div>
 </template>
 
 <script>
+import { mixin } from '../mixin.js';
 
 export default {
   name: 'VueTestSchool',
@@ -15,11 +16,6 @@ export default {
       address: '南昌'
     };
   },
+  mixins: [mixin]
 };
 </script>
-
-<style>
-.demo {
-  background-color: #3989d4;
-}
-</style>
