@@ -1,7 +1,7 @@
 <template>
   <div class="demo">
-    <h2 @click="showName">学生姓名:{{ name }}</h2>
-    <h2>性别:{{ sex }}</h2>
+    <h2 @click="showName">学校名称:{{ name }}</h2>
+    <h2>学校地址:{{ address }}</h2>
   </div>
 </template>
 
@@ -12,11 +12,10 @@ export default {
   name: 'VueTestSchool',
   data() {
     return {
-      name: '张三',
-      sex: '男'
+      name: '江财',
+      address: '南昌'
     };
   },
   mixins: [mixin]
 };
 </script>
-  
