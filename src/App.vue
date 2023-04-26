@@ -2,9 +2,11 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <TodoHeader />
-        <ToDoList />
-        <ToDoFooter />
+        <!-- 通过props给header传入函数获取用户输入的值 -->
+        <TodoHeader :addTodo="addTodo" />
+        <!-- 将handleCheck传入List再传入Items -->
+        <ToDoList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo" />
+        <ToDoFooter :todos="todos" :checkAll="checkAll" :clear="clear" />
       </div>
     </div>
   </div>
@@ -21,6 +23,46 @@ export default {
     TodoHeader,
     ToDoList,
     ToDoFooter
+  },
+  data () {
+    return {
+      todos: [
+        { id: '001', title: '吃饭', done: true },
+        { id: '002', title: '睡觉', done: false },
+        { id: '003', title: '打游戏', done: true }
+      ]
+    };
+  },
+  methods: {
+    // 再todos最前添加todo
+    addTodo (a) {
+      this.todos.unshift(a)
+    },
+    //勾选或取消勾选todo
+    checkTodo (id) {
+      // for (let i = 0; i < this.todos.length; i++) {
+      //   if (id === this.todos[i].id) this.todos[i].done = !this.todos[i].done
+      // }
+      this.todos.forEach((todo) => {
+        if (id === todo.id) todo.done = !todo.done
+      })
+    },
+    //删除todo
+    deleteTodo (id) {
+      if (confirm('确定删除?')) {
+        this.todos.splice(this.todos.findIndex((todo) => todo.id === id), 1)
+      }
+    },
+    //全选
+    checkAll (isAll) {
+      this.todos.forEach((todo) => todo.done = isAll)
+    },
+    //清除已完成
+    clear () {
+      if (confirm('确定删除?')) {
+        this.todos = this.todos.filter((todo) => todo.done !== true)
+      }
+    }
   }
 };
 </script>
@@ -40,7 +82,8 @@ body {
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 }
 

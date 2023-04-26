@@ -1,33 +1,34 @@
 <template>
   <div class="todo-footer">
     <label>
-      <!-- <input type="checkbox" :checked="isAll" @change="checkAll"/> -->
-      <input type="checkbox" />
+      <!-- <input type="checkbox" :checked="isAll" @change="check" /> -->
+      <input type="checkbox" v-model="isAll" />
     </label>
     <span>
-      <span>已完成</span> / 全部
+      <span>已完成{{completed}}</span> / 全部{{todos.length}}
     </span>
-    <button>清除已完成任务</button>
+    <button @click="clear">清除已完成任务</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'WorkspaceJsonToDoFooter',
+  props: ['todos', 'checkAll', 'clear'],
+  computed: {
+    completed () {
+      return this.todos.reduce((pre, cur) => pre + (cur.done ? 1 : 0), 0)
+    },
+    isAll: {
+      get () {
+        return this.todos.length === this.completed && this.todos.length > 0
+      },
 
-  data() {
-    return {
-
-    };
-  },
-
-  mounted() {
-
-  },
-
-  methods: {
-
-  },
+      set (value) {
+        this.checkAll(value)
+      }
+    },
+  }
 };
 </script>
 

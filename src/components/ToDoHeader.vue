@@ -9,12 +9,16 @@ import { nanoid } from "nanoid"
 
 export default {
   name: 'WorkspaceJsonTodoHeader',
-
+  props: ['addTodo'],
   methods: {
-    add(event) {
+    add (event) {
+      if (event.target.value === '') {
+        alert('输入非法')
+        return
+      }
       // 将用户的输入包装成一个todo对象
       const todoObj = { id: nanoid(), title: event.target.value, done: false }
-      
+      this.addTodo(todoObj)
     }
   },
 };
@@ -34,6 +38,7 @@ export default {
 .todo-header input:focus {
   outline: none;
   border-color: rgba(82, 168, 236, 0.8);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+    0 0 8px rgba(82, 168, 236, 0.6);
 }
 </style>

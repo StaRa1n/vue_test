@@ -1,6 +1,12 @@
 <template>
   <ul class="todo-main">
-    <ToDoItems v-for="todoObj in todos" :key="todoObj.id" :todo="todoObj" />
+    <!-- 事件渲染v-for -->
+    <ToDoItems v-for="todoObj in todos" 
+    :key="todoObj.id" 
+    :todo="todoObj" 
+    :checkTodo="checkTodo"
+    :deleteTodo="deleteTodo"
+  />
   </ul>
 </template>
 
@@ -9,16 +15,7 @@ import ToDoItems from './ToDoItems.vue';
 export default {
   name: 'WorkspaceJsonToDoList',
   components: { ToDoItems },
-  data() {
-    return {
-      todos: [
-        { id: '001', title: '吃饭', done: true },
-        { id: '002', title: '睡觉', done: false },
-        { id: '003', title: '打游戏', done: true }
-      ]
-    };
-  },
-
+  props: ['todos', 'checkTodo', 'deleteTodo']
 };
 </script>
 
