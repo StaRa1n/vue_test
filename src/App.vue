@@ -1,119 +1,53 @@
 <template>
-  <div id="root">
-    <div class="todo-container">
-      <div class="todo-wrap">
-        <!-- 通过props给header传入函数获取用户输入的值 -->
-        <TodoHeader :addTodo="addTodo" />
-        <!-- 将handleCheck传入List再传入Items -->
-        <ToDoList :todos="todos" :checkTodo="checkTodo" :deleteTodo="deleteTodo" />
-        <ToDoFooter :todos="todos" :checkAll="checkAll" :clear="clear" />
-      </div>
-    </div>
+  <div>
+    <h1>{{msg}}</h1>
+    <!-- 通过父组件给子组件传递函数类型的props实现:子给父传递数据,($emit触发) -->
+    <Student :getStudentName="getStudentName"></Student>
+    <hr>
+    <!-- 通过父组件给子组件绑定一个自定义事件实现:子给父传递数据,($emit触发) -->
+    <!--第一种写法: 使用@或v-on,可修饰事件 -->
+    <!-- <School @showName.once="getSchoolName"></School> -->
+    <School v-on:showName="getSchoolName" @demo="d1"></School>
+
+    <hr>
+    <h2>ref实现</h2>
+    <!--第二 种写法: 使用ref获取School组件的实例对象 -->
+    <School ref="School"></School>
   </div>
 </template>
 
 <script>
-import ToDoFooter from './components/ToDoFooter.vue';
-import TodoHeader from './components/ToDoHeader.vue';
-import ToDoList from './components/ToDoList.vue';
+import Student from './components/Student.vue'
+import School from './components/School.vue'
 
 export default {
   name: 'VueTestApp',
   components: {
-    TodoHeader,
-    ToDoList,
-    ToDoFooter
+    Student,
+    School
   },
   data () {
     return {
-      todos: JSON.parse(localStorage.getItem('todos'))
+      msg: '你好啊',
     };
   },
   methods: {
-    // 再todos最前添加todo
-    addTodo (a) {
-      this.todos.unshift(a)
+    //剩余参数以数组接受
+    getSchoolName (name) {
+      console.log(name);
     },
-    //勾选或取消勾选todo
-    checkTodo (id) {
-      // for (let i = 0; i < this.todos.length; i++) {
-      //   if (id === this.todos[i].id) this.todos[i].done = !this.todos[i].done
-      // }
-      this.todos.forEach((todo) => {
-        if (id === todo.id) todo.done = !todo.done
-      })
+    getStudentName (name) {
+      console.log(name);
     },
-    //删除todo
-    deleteTodo (id) {
-      if (confirm('确定删除?')) {
-        this.todos.splice(this.todos.findIndex((todo) => todo.id === id), 1)
-      }
-    },
-    //全选
-    checkAll (isAll) {
-      this.todos.forEach((todo) => todo.done = isAll)
-    },
-    //清除已完成
-    clear () {
-      if (confirm('确定删除?')) {
-        this.todos = this.todos.filter((todo) => todo.done !== true)
-      }
+    d1 () {
+      console.log('demo被调用了');
     }
   },
-  watch: {
-    todos: {
-      deep: true,
-      handler (value) {
-        localStorage.setItem('todos', JSON.stringify(value))
-      }
-    }
+  mounted () {
+    //App组件中未定义,但在School组件的$emit中定义了
+    this.$refs.School.$on('showName', this.getSchoolName)
+    // 触发一次
+    // this.$refs.School.$once('showName', this.getSchoolName)
   }
 };
 </script>
-
-<style>
-/*base*/
-body {
-  background: #fff;
-}
-
-.btn {
-  display: inline-block;
-  padding: 4px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-}
-
-.btn-danger {
-  color: #fff;
-  background-color: #da4f49;
-  border: 1px solid #bd362f;
-}
-
-.btn-danger:hover {
-  color: #fff;
-  background-color: #bd362f;
-}
-
-.btn:focus {
-  outline: none;
-}
-
-.todo-container {
-  width: 600px;
-  margin: 0 auto;
-}
-
-.todo-container .todo-wrap {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-</style>
