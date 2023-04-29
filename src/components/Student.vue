@@ -1,8 +1,6 @@
 <template>
   <div class="demo">
     <h2>学生姓名:{{ name }}</h2>
-    <h2>性别:{{ sex }}</h2>
-    <button @click="sendStudentName">把学生姓名给School组件</button>
   </div>
 </template>
 
