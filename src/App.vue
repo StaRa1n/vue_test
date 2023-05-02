@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <Category title="游戏" :listData="games">
+    <Category title="游戏">
       <!-- 使用作用域插槽必须用template, scope接收数据 -->
       <!-- 默认写法 -->
       <template v-slot:default="slotProps">
@@ -11,7 +11,7 @@
       </template>
     </Category>
 
-    <Category title="游戏" :listData="games">
+    <Category title="游戏">
       <!-- 简写写法 -->
       <template v-slot="slotProps">
         <ol>
@@ -20,22 +20,21 @@
       </template>
     </Category>
 
-    <Category title="游戏" :listData="games">
+    <Category title="游戏">
       <!-- 解构赋值写法 -->
       <template v-slot="{games}">
         <h4 v-for="(item, index) in games" :key="index">{{item}}</h4>
       </template>
     </Category>
 
-    <Category title="游戏" :listData="games">
+    <Category title="游戏">
       <!-- 作用域+具名+解构赋值写法 -->
       <template v-slot:foot="{games}">
         <h4 v-for="(item, index) in games" :key="index">{{item}}</h4>
       </template>
     </Category>
-
   </div>
-</template>s
+</template>
 
 <script>
 import Category from './components/Category.vue'
