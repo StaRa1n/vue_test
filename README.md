@@ -262,9 +262,9 @@ module.exports = {
 
       1. 理解：<span style="color:red">数据在组件的自身，但根据数据生成的结构需要组件的使用者来决定。</span>（games 数据在 Category 组件中，但使用数据所遍历出来的结构由 App 组件决定）
 
-      2. 具体编码：
+      2. 具体编码：<br/>
          默认写法`v-slot:default="scopeData"`<br/>
-         简写写法`v-slot="scopeData"`<span style="color:red">&emsp;&emsp; 注意混淆:具名插槽`v-slot:name`</span><br/>
+         简写写法`v-slot="scopeData"`<span style="color:red">&emsp; 注意混淆:具名插槽`v-slot:name`</span><br/>
          作用域+具名+解构赋值写法:`v-slot:foot="{games}`
 
       ```vue
