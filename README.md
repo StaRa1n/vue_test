@@ -105,6 +105,31 @@
 
 7. 注意：通过`this.$refs.xxx.$on('atguigu',回调)`绑定自定义事件时，回调<span style="color:red">要么配置在 methods 中</span>，<span style="color:red">要么用箭头函数</span>，否则 this 指向会出问题！
 
+## 消息订阅与发布
+
+1.  一种组件间通信的方式，适用于<span style="color:red">任意组件间通信</span>。
+
+2.  使用步骤：
+
+    1.  安装 pubsub：`npm i pubsub-js`
+
+    2.  引入: `import pubsub from 'pubsub-js'`
+
+    3.  接收数据：A 组件想接收数据，则在 A 组件中订阅消息，订阅的<span style="color:red">回调留在 A 组件自身。</span>
+
+        ```js
+        methods(){
+          demo(data){......}
+        }
+        ......
+        mounted() {
+          this.pid = pubsub.subscribe('xxx',this.demo) //订阅消息
+        }
+        ```
+
+    4.  提供数据：`pubsub.publish('xxx',数据)`
+
+    5.  最好在 beforeDestroy 钩子中，用`PubSub.unsubscribe(pid)`去<span style="color:red">取消订阅。</span>
 
 ## Vue 封装的过度与动画
 
@@ -132,7 +157,6 @@
       ```
 
    3. 备注：若有多个元素需要过度，则需要使用：`<transition-group>`，且每个元素都要指定`key`值。
-
 
 ## vue 脚手架配置代理
 
@@ -186,3 +210,98 @@ module.exports = {
 
 1. 优点：可以配置多个代理，且可以灵活的控制请求是否走代理。
 2. 缺点：配置略微繁琐，请求资源时必须加前缀。
+
+## 插槽
+
+1. 作用：让父组件可以向子组件指定位置插入 html 结构，也是一种组件间通信的方式，适用于 <strong style="color:red">父组件 ===> 子组件</strong> 。
+
+2. 分类：默认插槽、具名插槽、作用域插槽
+
+3. 使用方式：
+
+   1. 默认插槽：
+
+      ```vue
+      父组件中：
+      <Category>
+        <div>html结构1</div>
+      </Category>
+      子组件中：
+      <template>
+        <div>
+          <!-- 定义插槽 -->
+          <slot>插槽默认内容...</slot>
+        </div>
+      </template>
+      ```
+
+   2. 具名插槽：
+
+      ```vue
+      父组件中：
+      <Category>
+        <template slot="center">
+          <div>html结构1</div>
+        </template>
+      
+        <template v-slot:footer>
+          <div>html结构2</div>
+        </template>
+      </Category>
+      子组件中：
+      <template>
+        <div>
+          <!-- 定义插槽 -->
+          <slot name="center">插槽默认内容...</slot>
+          <slot name="footer">插槽默认内容...</slot>
+        </div>
+      </template>
+      ```
+
+   3. 作用域插槽：
+
+      1. 理解：<span style="color:red">数据在组件的自身，但根据数据生成的结构需要组件的使用者来决定。</span>（games 数据在 Category 组件中，但使用数据所遍历出来的结构由 App 组件决定）
+
+      2. 具体编码：
+         默认写法`v-slot:default="scopeData"`
+         简写写法`v-slot="scopeData"`<span style="color:red">&emsp;&emsp; 注意混淆:具名插槽`v-slot:name`</span>
+         作用域+具名+解构赋值写法:`v-slot:foot="{games}`
+
+      ```vue
+      父组件中：
+      <Category>
+        <template v-slot:default="scopeData">
+        <!-- 生成的是ul列表 -->
+          <ul>
+            <li v-for="g in scopeData.games" :key="g">{{g}}</li>
+          </ul>
+        </template>
+      </Category>
+
+      <Category>
+        <template v-slot="scopeData">
+          <!-- 生成的是h4标题 -->
+          <h4 v-for="g in scopeData.games" :key="g">{{g}}</h4>
+        </template>
+      </Category>
+
+      子组件中：
+      <template>
+        <div>
+          <slot :games="games"></slot>
+        </div>
+      </template>
+
+      <script>
+      export default {
+        name: 'Category',
+        props: ['title'],
+        //数据在子组件自身
+        data() {
+          return {
+            games: ['红色警戒', '穿越火线', '劲舞团', '超级玛丽'],
+          }
+        },
+      }
+      </script>
+      ```
