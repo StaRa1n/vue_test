@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 
 import About from '../pages/About'
 import Home from '../pages/Home'
+import HomeNews from '../pages/HomeNews'
+import HomeMsg from '../pages/HomeMsg'
 
 
 export default new VueRouter({
@@ -13,7 +15,18 @@ export default new VueRouter({
     },
     {
       path:'/home',
-      component: Home
+      component: Home,
+      //配置子级路由
+      children: [
+        {
+          path: 'HomeNews', //此处不要写'/HomeNews'
+          component: HomeNews,
+        },
+        {
+          path: 'HomeMsg',
+          component: HomeMsg,
+        }
+      ]
     }
   ]
 })

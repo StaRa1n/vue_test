@@ -5,6 +5,20 @@
 <script>
 export default {
   name: 'VueTestAbout',
+
+  data() {
+    return {
+      
+    };
+  },
+
+  mounted() {
+    
+  },
+
+  methods: {
+    
+  },
 };
 </script>
 
