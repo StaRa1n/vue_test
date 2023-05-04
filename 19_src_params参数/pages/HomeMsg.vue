@@ -8,7 +8,7 @@
         <!-- 跳转并携带query参数，to的对象写法 -->
         <router-link :to="{ 
           name: 'detail',   //若使用 to 的对象写法，则不能使用 path 配置项，必须使用 name 配置！
-          query: {
+          params: {
             id: msg.id,
             title: msg.title
           },

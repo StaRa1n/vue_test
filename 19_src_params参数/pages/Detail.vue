@@ -1,0 +1,20 @@
+<template>
+  <div>
+    <ul>
+      <li>消息编号:{{$route.params.id}}</li>
+      <li>消息标题:{{$route.params.title}}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'VueTestDetail',
+  mounted () {
+    console.log(this.$route.params)
+  },
+};
+</script>
+
+<style scoped>
+</style>

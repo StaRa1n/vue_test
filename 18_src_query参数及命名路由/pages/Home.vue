@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import HomeMsgVue from './HomeMsg.vue';
+import HomeNews from './HomeNews.vue';
 
 export default {
   name: 'VueTestHome',
