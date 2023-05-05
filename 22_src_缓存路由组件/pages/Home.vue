@@ -14,7 +14,7 @@
         <div class="panel-body">
           <!-- 指定组件的呈现位置 -->
           <!-- include的值为vue组件的name属性 -->
-          <keep-alive>
+          <keep-alive include="VueTestHomeNews"> 
             <router-view></router-view>
           </keep-alive>
         </div>
