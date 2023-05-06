@@ -9,7 +9,6 @@ import Detail from '../pages/Detail'
 
 
 const router = new VueRouter({
-  mode: 'history',
   routes:[
     {
       name: 'guanyu',
